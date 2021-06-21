@@ -53,9 +53,9 @@ def main():
 
     header = Header()
     header.set_branding(tag("i", cls="fas fa-dog"))
-    header.add_tab("first", href="first.html", inner=tag("span", inner="First")
-    header.add_tab("second", href="second.html", inner=tag("span", inner="Second")
-    header.add_tab("third", href="third.html", inner=tag("span", inner="Third")
+    header.add_tab("first", href="first.html", inner=tag("span", inner="First").value)
+    header.add_tab("second", href="second.html", inner=tag("span", inner="Second").value)
+    header.add_tab("third", href="third.html", inner=tag("span", inner="Third").value)
     header.add_tab_icon("language", onclick="toggleLanguage()")
     header.add_tab_icon(
         "dark_mode", subclass="outlined", ID="dark-mode-toggle", onclick="toggleDark()"
