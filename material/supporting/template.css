@@ -1,3 +1,8 @@
+/*
+    Generated using https://github.com/bczsalba/Material.html
+    at {time}.
+*/
+
 :root {
     --accent: {accent};
     --foreground: {foreground};
@@ -11,8 +16,6 @@
     background-color: var(--background);
 }
 
-/* Todo: this could be simple CSS with no JS. 
-   Also, `prefers-color-scheme` should be used. */
 .dark-mode {
     --foreground: {accent};
     --background: {dark-background};
@@ -268,6 +271,9 @@ button + button {
     display: block;
 }
 
+/* Todo: This entire object (along with parent) should be
+         rewritten. 
+ */
 .content {
     background-color: transparent;
     margin: 50px auto;

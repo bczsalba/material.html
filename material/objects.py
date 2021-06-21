@@ -1,8 +1,10 @@
 """
-material.objects.
------------------
-
+material.objects
+----------------
 author: bczsalba
+
+
+All the HTML elements for this module.
 """
 
 # pylint: disable=invalid-name
@@ -11,6 +13,7 @@ from __future__ import annotations
 
 
 from shutil import copyfile
+from datetime import datetime
 from typing import Optional, Any
 from dataclasses import dataclass, field
 from os.path import dirname, abspath, join
@@ -221,6 +224,7 @@ class Document:
             with open(join(target_dir, "style.css"), "w") as style:
                 header_width = str(100 / len(self.header.tabs)) + "%"
                 css = template.read().replace("{width}", header_width)
+                css = css.replace("{time}", format(datetime.now(), "%Y-%m-%d %H:%M%:%S"))
 
                 for key, value in self.styles.items():
                     css = css.replace("{" + key + "}", value)

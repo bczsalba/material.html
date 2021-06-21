@@ -1,8 +1,11 @@
 """
-material.objects.
------------------
-
+material.templates
+------------------
 author: bczsalba
+
+
+Template strings for various tags.
+Note: The CSS template is stored at supporting/template.css.
 """
 
 __all__ = [
