@@ -1,0 +1,317 @@
+:root {
+    --accent: {accent};
+    --foreground: {foreground};
+    --background: {background};
+    --header-one: {header-one};
+    --header-two: {header-two};
+    --paragraph: {paragraph};
+    --layer-first: {layer-first};
+
+    font-family: Roboto, sans-serif;
+    background-color: var(--background);
+}
+
+/* Todo: this could be simple CSS with no JS. 
+   Also, `prefers-color-scheme` should be used. */
+.dark-mode {
+    --foreground: {accent};
+    --background: {dark-background};
+    --header-one: {dark-header-one};
+    --header-two: {dark-header-two};
+    --paragraph: {dark-paragraph};
+
+    background-color: var(--background);
+}
+
+@media screen and (max-width: 1024px) {
+    .header {
+        height: 122px;
+    }
+
+    .header-nav {
+        display: block;
+    }
+
+    .nav {
+        display: flex;
+        justify-content: space-between;
+
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 58px;
+
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .nav-icon {
+        display: flex;
+        margin-right: 0;
+    }
+    
+    .nav-item {
+        width: {width};
+        position: relative;
+    }
+
+    .hu {
+        /* font-size: 0.9rem; */
+    }
+
+    .content-parent {
+        top: 122px;
+    }
+
+    .content {
+        width: 95%;
+    }
+
+    .content h1 {
+        padding: 0px 5px;
+        text-align: center;
+    }
+
+    .content img,
+    .content-img {
+        width: 80%;
+    }
+
+    .home-text, .home-image {
+        width: 100%;
+    }
+
+    .home-image {
+        margin: 50px 0;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .header {
+        height: 64px;
+    }
+
+    .header-nav {
+        display: flex;
+    }
+ 
+    .nav {
+        position: relative;
+        display: inline-flex;
+    }
+
+    .nav-icon {
+        display: inline-flex;
+        margin-right: 20px;
+    }
+
+    .nav-item {
+        width: auto;
+    }
+
+    a + a {
+        padding-left: 10px;
+    }
+
+    .content {
+        width: 90%;
+    }
+
+    .content-parent {
+        top: 64px;
+    }
+
+    .content h1 {
+        text-align: left;
+        margin: 10px 20px;
+    }
+
+    .content img,
+    .content-img {
+        max-width: 350px;
+        margin-left: auto;
+        margin: 15px 0;
+    }
+
+    .home-text {
+        width: 60%;
+    }
+
+    .home-text + .home-image,
+    .home-image + .home-text {
+        padding-left: 30px;
+    }
+
+}
+
+
+html, body {
+    margin: 0;
+    padding: 0;
+
+    height: 100%;
+    width: 100%;
+    
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: var(--foreground);
+}
+
+button:hover {
+    color: grey;
+    transition: all 0.3s;
+}
+
+button + button {
+    padding-left: 10px;
+}
+
+.nav + .nav-icon {
+    padding-left: 20px;
+}
+
+.header button {
+    border: none;
+    background-color: transparent;
+}
+
+.dark-mode img {
+    filter: brightness(75%);
+}
+
+.dark-mode .content {
+    background-color: var(--layer-first);
+}
+
+.header {
+    background-color: var(--layer-first);
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 0px 2px 10px 3px rgba(0,0,0,0.24);
+}
+
+.header-branding {
+    width: 100%;
+    margin-left: 20px;
+}
+
+.nav-item {
+    color: var(--foreground);
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 64px;
+
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+
+    text-align: center;
+    vertical-align: middle;
+}
+
+.logo {
+    font-size: 1.5rem;
+    height: 35px;
+    text-align: left;
+}
+
+.active.logo {
+    background-color: grey;
+}
+
+.nav-icon {
+    font-size: 25px;
+    width: 100%;
+}
+
+.material-icons.nav-item,
+.material-icons-outlined.nav-item {
+    font-size: 25px;
+}
+
+#nav-first-icon {
+    padding-left: 30px;
+}
+
+.nav-indicator {
+    position: absolute;
+    bottom: 0;
+    left: 1%;
+    right: 0;
+    height: 0;
+    transition: height 0.3s;
+}
+
+.active.nav-indicator {
+    background-color: var(--foreground);
+    height: 4px;
+}
+
+.main-image-container + .main-image-container {
+    padding-left: 15px;
+}
+
+.content-parent {
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+
+    /* margin: auto; */
+    text-align: center;
+}
+
+.show.content-parent {
+    display: block;
+}
+
+.content {
+    background-color: transparent;
+    margin: 50px auto;
+    padding-bottom: 5px;
+
+    max-width: 1400px;
+    border-radius: 5px;
+}
+
+.content h1 {
+    font-size: 60px;
+    color: var(--header-one);
+    font-weight: 400;
+}
+
+.content h2 {
+    font-size: 18px;
+    text-align: left;
+    padding-left: 20px;
+    font-weight: 400;
+    color: var(--header-two);
+}
+
+.content p {
+    font-size: 16px;
+    text-align: left;
+    font-weight: 400;
+    color: var(--paragraph);
+    padding: 0px 20px;
+}
+
+.content-img, 
+.content img {
+    border: 1px solid var(--foreground);
+    box-shadow: 0px 8px 17px 2px rgba(0,0,0,0.14) , 0px 3px 14px 2px rgba(0,0,0,0.12) , 0px 5px 5px -3px rgba(0,0,0,0.2);
+
+    display: inline-block;
+    transition: all 0.5s;
+}
+
+.home-text {
+    display: inline-block;
+}
+
+.home-image {
+    display: inline-block;
+}
