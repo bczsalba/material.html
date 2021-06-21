@@ -163,7 +163,7 @@ a {
     color: var(--foreground);
 }
 
-button:hover {
+button:hover, a:hover {
     color: grey;
     transition: all 0.3s;
 }
@@ -303,6 +303,7 @@ button + button {
     font-weight: 400;
     color: var(--paragraph);
     padding: 0px 20px;
+    text-align: justify;
 }
 
 .content-img, 
@@ -320,4 +321,8 @@ button + button {
 
 .home-image {
     display: inline-block;
+}
+
+.hu, .en {
+    display: none;
 }

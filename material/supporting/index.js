@@ -1,16 +1,22 @@
-var language = localStorage.getItem("language");
+var language = localStorage.getItem("language") || "hu";
 var darkModeToggle = document.getElementById("dark-mode-toggle");
 
-// Todo: this isn't consistent through different sites
-function toggleLanguage(save=false) {
+function toggleLanguage() {
+    content_parent = document.getElementById("content-parent")
+    language = (language == "en") ? "hu" : "en";
+    
+    unhideLanguage(language)
+    localStorage.setItem("language", language);
+    console.log(language);
+}
+
+function unhideLanguage(lang) {
+    document.body.style.display = "none";
+
     hu = document.querySelectorAll(".hu")
     en = document.querySelectorAll(".en")
-    content_parent = document.getElementById("content-parent")
 
-    language = (language == "en") ? "hu" : "en";
-    document.body.style.display = "none"
-
-    if (language == "hu") {
+    if (lang == "en") {
         hu.forEach((element) => {
             element.style.display = "none";
         });
@@ -23,7 +29,7 @@ function toggleLanguage(save=false) {
         });
     }
 
-    else if (language == "en") {
+    else if (lang == "hu") {
         hu.forEach((element) => {
             if (element.parentElement.classList.contains("nav-item")) {
                 element.style.display = "inline-block";
@@ -35,9 +41,8 @@ function toggleLanguage(save=false) {
         en.forEach((element) => {
             element.style.display = "none";
         });
-    }
-
-    document.body.style.display = "block"
+    };
+    document.body.style.display = "block";
 }
 
 function toggleDark(transition=true) {
@@ -86,7 +91,6 @@ function detectDarkreader() {
 
 // Set initial data
 detectDarkreader();
-toggleLanguage();
 
 // Only display content once all images have loaded
 Promise.all(Array.from(document.images)
@@ -103,6 +107,8 @@ new MutationObserver(detectDarkreader).observe(document.querySelector("head"), {
 
 // Apply saved preferances
 window.onload = () => {
+    unhideLanguage(language);
+
     if (localStorage.getItem("isDarkMode") == "true") {
         toggleDark(false);
     };

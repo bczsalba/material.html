@@ -18,15 +18,6 @@ __all__ = [
 ]
 
 
-DIV_TEMPLATE = """\
-<div class="{cls}" id="{ID}">
-    {elements}
-</div>"""
-
-IMG_TEMPLATE = """\
-<img src="{src}" alt="{alt}" class="{cls}" id="{ID}"></img>
-"""
-
 DOCUMENT_TEMPLATE = """\
 <!DOCTYPE html>
 <html>

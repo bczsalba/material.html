@@ -4,10 +4,10 @@ from material import (
     Header,
     Div,
     Img,
-    Custom,
     home_text,
     home_image,
     lorem_ipsum,
+    tag,
 )
 
 
@@ -27,12 +27,10 @@ def create_documents():
         content = doc.add_content()
         content.elements.append(
             home_text(
-                Custom(
-                    value="""\
-                    <h1>This is Jeremy.</h1>
-                    <h2>say hi to Jeremy!</h2>
-                    <p>Dogs are cute.</p>
-                """
+                (
+                    tag("h1", inner="This is Jeremy."),
+                    tag("h2", inner="say hi to Jeremny!"),
+                    tag("p", inner="Dogs are cute."),
                 )
             )
         )
@@ -54,10 +52,10 @@ def main():
     """Setup data & create documents"""
 
     header = Header()
-    header.set_branding("<span class='logo'><i class='fas fa-dog'></i></span>")
-    header.add_tab("first", href="first.html", inner=f"<span>First</span>")
-    header.add_tab("second", href="second.html", inner=f"<span>Second</span>")
-    header.add_tab("third", href="third.html", inner=f"<span>Third</span>")
+    header.set_branding(tag("i", cls="fas fa-dog"))
+    header.add_tab("first", href="first.html", inner=tag("span", inner="First")
+    header.add_tab("second", href="second.html", inner=tag("span", inner="Second")
+    header.add_tab("third", href="third.html", inner=tag("span", inner="Third")
     header.add_tab_icon("language", onclick="toggleLanguage()")
     header.add_tab_icon(
         "dark_mode", subclass="outlined", ID="dark-mode-toggle", onclick="toggleDark()"

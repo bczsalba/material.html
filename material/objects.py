@@ -21,8 +21,6 @@ from os.path import dirname, abspath, join
 from html5print import HTMLBeautifier
 
 from .templates import (
-    DIV_TEMPLATE,
-    IMG_TEMPLATE,
     DOCUMENT_TEMPLATE,
     HEADER_TEMPLATE,
     TAB_TEMPLATE,
@@ -32,55 +30,100 @@ from .templates import (
 
 @dataclass
 class HtmlElement:
-    """Base class for all elements defined below"""
+    """Base class for all HTML tags"""
 
     cls: str = ""
     ID: str = ""
 
+    name: str = field(default="", init=False)
+    _inner: str = field(init=False)
 
-@dataclass
-class Custom(HtmlElement):
-    """Element that allows setting custom html code
-    Note: be sure to use `Content(value=...)`"""
+    def __post_init__(self) -> None:
+        setattr(self, "_inner", "")
 
-    value: str = ""
+    @property
+    def tag_data(self) -> str:
+        """Get data for tag (the stuff in the starting tag)"""
+
+        data = ""
+        for key in getattr(self, "__dataclass_fields__").keys():
+            if key.startswith("_") or key == "name":
+                continue
+
+            value = getattr(self, key)
+
+            if key == "ID":
+                key = "id"
+
+            elif key == "cls":
+                key = "class"
+
+            if len(value) > 0 and isinstance(value, str):
+                data += f" {key}=\"{value}\""
+
+        return data
+
+    @property
+    def inner(self) -> str:
+        """Return self._field"""
+
+        return self._inner
+
+    @property
+    def value(self) -> str:
+        """Return HTML of HtmlElement"""
+
+        return (
+            self.start_tag() + self.inner + self.end_tag()
+        )
+
+    def start_tag(self) -> str:
+        """Get starting tag value"""
+
+        return "<" + self.name + self.tag_data + ">"
+
+    def end_tag(self) -> str:
+        """Get end tag value"""
+
+        return f"</{self.name}>"
 
 
+def tag(name, inner: str = "", **html_args) -> HtmlElement:
+    """Create a custom tag"""
+
+    obj = HtmlElement(**html_args)
+    obj.name = name
+    setattr(obj, "_inner", inner)
+
+    return obj
+        
 @dataclass
 class Div(HtmlElement):
     """Representative of the HTML div tag
     Modify its elements using `Div().elements`"""
 
+    name = "div"
     elements: list[HtmlElement] = field(default_factory=list)
 
-    @property
-    def value(self) -> str:
-        """Return HTML of object"""
+    def __post_init__(self) -> None:
+        """Set up custom HtmlElement"""
 
-        return DIV_TEMPLATE.format(
-            cls=self.cls,
-            ID=self.ID,
-            elements="\n".join(element.value for element in self.elements),
-        )
+        self.tagtype = "div"
+
+    @property
+    def inner(self) -> str:
+        """Get inner value for tag"""
+
+        return "\n".join(element.value for element in self.elements)
 
 
 @dataclass
 class Img(HtmlElement):
     """Representative of the HTML img tag"""
 
+    name = "img"
     src: str = ""
     alt: str = ""
-
-    @property
-    def value(self) -> str:
-        """Return HTML of object"""
-
-        return IMG_TEMPLATE.format(
-            src=self.src,
-            alt=self.alt,
-            cls=self.cls,
-            ID=self.ID,
-        )
 
 
 class Header:
@@ -92,27 +135,28 @@ class Header:
         self.branding = ""
         self.tabs: list[str] = []
         self.icons: list[str] = []
-        self.value = ""
 
-    def _set_value(self) -> None:
-        """Update HTML of object"""
+    @property
+    def value(self) -> str:
+        """Get HTML of object"""
 
-        self.value = HEADER_TEMPLATE.format(
-            branding=self.branding,
+        return HEADER_TEMPLATE.format(
+            branding=self.branding.value,
             tabs="\n".join(line for line in self.tabs),
             icons="\n".join(line for line in self.icons),
         )
 
-    def set_branding(self, tag: str) -> None:
+    def set_branding(self, tag: HtmlElement) -> None:
         """Set left-hand-side branding"""
 
         self.branding = tag
-        self._set_value()
 
     def add_tab(
         self, name: str, href: Optional[str] = None, inner: Optional[str] = None
     ) -> None:
-        """Add a new textual tab element"""
+        """Add a new textual tab element
+
+        Note: `inner` for now has to be a string!"""
 
         if href is None:
             href = f"{name}.html"
@@ -121,7 +165,6 @@ class Header:
             inner = f"<span>{name}</span>"
 
         self.tabs.append(TAB_TEMPLATE.format(href=href, inner=inner, name=name))
-        self._set_value()
 
     def add_tab_icon(
         self, icon: str, ID: str = "", onclick: str = "", subclass: str = ""
@@ -136,7 +179,6 @@ class Header:
                 icon=icon, ID=ID, onclick=onclick, subclass=subclass
             )
         )
-        self._set_value()
 
 
 class Document:
