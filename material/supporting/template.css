@@ -70,6 +70,7 @@
     .content h1 {
         padding: 0px 5px;
         text-align: center;
+        font-size: 45px;
     }
 
     .content img,
@@ -200,6 +201,11 @@ button + button {
     margin-left: 20px;
 }
 
+.header-branding img {
+    height: 30px;
+    padding-top: 20px;
+}
+
 .nav-item {
     color: var(--foreground);
     font-size: 1rem;
@@ -270,9 +276,6 @@ button + button {
     display: block;
 }
 
-/* Todo: This entire object (along with parent) should be
-         rewritten. 
- */
 .content {
     background-color: transparent;
     margin: 50px auto;
@@ -303,6 +306,21 @@ button + button {
     color: var(--paragraph);
     padding: 0px 20px;
     text-align: justify;
+
+    margin: 5px 0;
+}
+
+.content ul {
+    font-size: 16px;
+    text-align: left;
+    font-weight: 400;
+    color: var(--paragraph);
+
+    margin: 5px 0;
+}
+
+.content li + li {
+    padding-top: 5px;
 }
 
 .content-img, 
