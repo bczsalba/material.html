@@ -47,14 +47,13 @@ DOCUMENT_TEMPLATE = """\
         {contents}
     </div>
 
-    <!-- Use highlighting -->
-    <script>hljs.highlightAll();</script>
-
     <!-- This is here because some divs need to load before it can execute -->
     <script src="/{subpage}/index.js"></script>
+    {include_scripts}
 
     <!-- Set the right tab indicator to active: The first item in the comparison is formatted during generation -->
     <script>
+        hljs.highlightAll();
         if ("{name}" != "index") {{
             document.getElementById("{name}-indicator").classList.add("active")
         }};

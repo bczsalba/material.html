@@ -212,6 +212,7 @@ class Document:
 
     global_header: Optional[Header] = None
     global_include_css: list[str] = []
+    global_include_scripts: list[str] = []
     global_subpage: str = ""
 
     def __init__(self, filename: str) -> None:
@@ -261,6 +262,10 @@ class Document:
                 include_css="\n".join(
                     f'<link rel="stylesheet" href="/{src}">'
                     for src in Document.global_include_css
+                ),
+                include_scripts="\n".join(
+                    f'<script src="/{src}">'
+                    for src in Document.global_include_scripts
                 ),
             ),
             indent=4,
