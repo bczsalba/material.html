@@ -157,7 +157,7 @@ class Header:
         """Initialize object"""
 
         self.branding = ""
-        self.subpage = ""
+        self.subpage = Document.global_subpage
         self.tabs: list[str] = []
         self.icons: list[str] = []
 
@@ -186,11 +186,11 @@ class Header:
 
         if href is None:
             href = f"{name}.html"
-
+            
         if inner is None:
             inner = f"<span>{name}</span>"
 
-        self.tabs.append(TAB_TEMPLATE.format(href=href, inner=inner, name=name))
+        self.tabs.append(TAB_TEMPLATE.format(subpage=self.subpage, href=href, inner=inner, name=name))
 
     def add_tab_icon(
         self, icon: str, ID: str = "", onclick: str = "", subclass: str = ""
