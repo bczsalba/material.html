@@ -184,6 +184,12 @@ class Header:
 
         Note: `inner` for now has to be a string!"""
 
+        if not self.subpage.startswith("/"):
+            self.subpage = "/" + self.subpage
+
+        if not self.subpage.endswith("/"):
+            self.subpage += "/"
+
         if href is None:
             href = f"{name}.html"
             

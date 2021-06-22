@@ -65,7 +65,7 @@ DOCUMENT_TEMPLATE = """\
 HEADER_TEMPLATE = """\
     <header class="header">
         <div class="header-branding">
-            <a class="nav-item logo" title="Go home" href="/{subpage}">
+            <a class="nav-item logo" title="Go home" href="{subpage}">
                 {branding}
             </a>
         </div>
