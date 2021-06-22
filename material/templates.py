@@ -39,7 +39,7 @@ DOCUMENT_TEMPLATE = """\
               href="https://unpkg.com/@highlightjs/cdn-assets@11.0.1/styles/default.min.css">
         <script src="https://unpkg.com/@highlightjs/cdn-assets@11.0.1/highlight.min.js"></script>
 
-        <link rel="stylesheet" href="/{subpage}/generated.css">
+        <link rel="stylesheet" href="{subpage}generated.css">
         {include_css}
     </head>
     {header}
@@ -47,8 +47,10 @@ DOCUMENT_TEMPLATE = """\
         {contents}
     </div>
 
+    {footer}
+
     <!-- This is here because some divs need to load before it can execute -->
-    <script src="/{subpage}/index.js"></script>
+    <script src="{subpage}index.js"></script>
     {include_scripts}
 
     <!-- Set the right tab indicator to active: The first item in the comparison is formatted during generation -->
@@ -64,7 +66,7 @@ DOCUMENT_TEMPLATE = """\
 HEADER_TEMPLATE = """\
     <header class="header">
         <div class="header-branding">
-            <a class="nav-item logo" title="Go home" href="/{subpage}/">
+            <a class="nav-item logo" title="Go home" href="/{subpage}">
                 {branding}
             </a>
         </div>
@@ -80,7 +82,7 @@ HEADER_TEMPLATE = """\
 """
 
 TAB_TEMPLATE = """\
-<a class="nav-item" href="/{subpage}/{href}">
+<a class="nav-item" href="{subpage}{href}">
     {inner}
     <span class="nav-indicator" id="{name}-indicator">
 </a>
