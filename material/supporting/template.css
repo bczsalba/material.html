@@ -305,6 +305,7 @@ button + button {
     font-size: 60px;
     color: var(--header-one);
     font-weight: 400;
+    overflow-wrap: anywhere;
 }
 
 .content h2 {
