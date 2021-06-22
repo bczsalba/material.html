@@ -39,7 +39,7 @@ DOCUMENT_TEMPLATE = """\
               href="https://unpkg.com/@highlightjs/cdn-assets@11.0.1/styles/default.min.css">
         <script src="https://unpkg.com/@highlightjs/cdn-assets@11.0.1/highlight.min.js"></script>
 
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="generated.css">
         {include_css}
     </head>
     {header}

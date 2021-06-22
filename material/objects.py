@@ -28,6 +28,17 @@ from .templates import (
 )
 
 
+__all__ = [
+    "HtmlElement",
+    "tag",
+    "ul",
+    "Div",
+    "Img",
+    "Header",
+    "Document",
+]
+
+
 @dataclass
 class HtmlElement:
     """Base class for all HTML tags"""
@@ -39,14 +50,17 @@ class HtmlElement:
     _inner: str = field(init=False)
 
     def __post_init__(self) -> None:
-        setattr(self, "_inner", "")
+        """Set value for _inner"""
+
+        self._inner = ""
+        self.property_fields = getattr(self, "__dataclass_fields__").copy()
 
     @property
     def tag_data(self) -> str:
         """Get data for tag (the stuff in the starting tag)"""
 
         data = ""
-        for key in getattr(self, "__dataclass_fields__").keys():
+        for key in self.property_fields.keys():
             if key.startswith("_") or key == "name":
                 continue
 
@@ -59,13 +73,13 @@ class HtmlElement:
                 key = "class"
 
             if len(value) > 0 and isinstance(value, str):
-                data += f" {key}=\"{value}\""
+                data += f' {key}="{value}"'
 
         return data
 
     @property
     def inner(self) -> str:
-        """Return self._field"""
+        """Return self._inner"""
 
         return self._inner
 
@@ -73,9 +87,15 @@ class HtmlElement:
     def value(self) -> str:
         """Return HTML of HtmlElement"""
 
-        return (
-            self.start_tag() + self.inner + self.end_tag()
-        )
+        return self.start_tag() + self.inner + self.end_tag()
+
+    def set_property(self, key: str, value: str) -> HtmlElement:
+        """Allow setting custom properties inline, return self"""
+
+        setattr(self, key, value)
+        self.property_fields[key] = value
+
+        return self
 
     def start_tag(self) -> str:
         """Get starting tag value"""
@@ -96,7 +116,14 @@ def tag(name, inner: str = "", **html_args) -> HtmlElement:
     setattr(obj, "_inner", inner)
 
     return obj
-        
+
+
+def ul(items: list[str]) -> HtmlElement:
+    """Create unordered-list from items"""
+
+    return tag("ul", "\n".join(f"<li>{item}</li>" for item in items))
+
+
 @dataclass
 class Div(HtmlElement):
     """Representative of the HTML div tag
@@ -104,11 +131,6 @@ class Div(HtmlElement):
 
     name = "div"
     elements: list[HtmlElement] = field(default_factory=list)
-
-    def __post_init__(self) -> None:
-        """Set up custom HtmlElement"""
-
-        self.tagtype = "div"
 
     @property
     def inner(self) -> str:
@@ -226,7 +248,10 @@ class Document:
                 title=self.title,
                 header=("" if self.header is None else self.header.value),
                 contents="\n".join(content.value for content in self.contents),
-                include_css="\n".join(f'<link rel="stylesheet" href="{src}">' for src in Document.global_include_css),
+                include_css="\n".join(
+                    f'<link rel="stylesheet" href="{src}">'
+                    for src in Document.global_include_css
+                ),
             ),
             indent=4,
         )
@@ -265,14 +290,18 @@ class Document:
             target_dir = abspath(name)
 
         with open(join(supporting_dir, "template.css"), "r") as template:
-            with open(join(target_dir, "style.css"), "w") as style:
+            with open(join(target_dir, "generated.css"), "w") as style:
                 header_width = str(100 / len(self.header.tabs)) + "%"
                 css = template.read().replace("{width}", header_width)
-                css = css.replace("{time}", format(datetime.now(), "%Y-%m-%d %H:%M%:%S"))
+                css = css.replace(
+                    "{time}", format(datetime.now(), "%Y-%m-%d %H:%M%:%S")
+                )
 
                 for key, value in self.styles.items():
                     css = css.replace("{" + key + "}", value)
 
+                print("Generated CSS at", join(target_dir, "generated.css"))
                 style.write(css)
 
         copyfile(join(supporting_dir, "index.js"), join(target_dir, "index.js"))
+        print("Copied index.js to", join(target_dir, "index.js"))
