@@ -185,6 +185,7 @@ class Document:
     """Representative of an HTML file (document)"""
 
     global_header: Optional[Header] = None
+    global_include_css: list[str] = []
 
     def __init__(self, filename: str) -> None:
         """Initialize object"""
@@ -225,6 +226,7 @@ class Document:
                 title=self.title,
                 header=("" if self.header is None else self.header.value),
                 contents="\n".join(content.value for content in self.contents),
+                include_css="\n".join(f'<link rel="stylesheet" href="{src}">' for src in Document.global_include_css),
             ),
             indent=4,
         )

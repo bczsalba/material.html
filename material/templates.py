@@ -31,13 +31,24 @@ DOCUMENT_TEMPLATE = """\
         <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
+        <link rel="stylesheet" 
+            href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
+            integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
+
+        <link rel="stylesheet"
+              href="https://unpkg.com/@highlightjs/cdn-assets@11.0.1/styles/default.min.css">
+        <script src="https://unpkg.com/@highlightjs/cdn-assets@11.0.1/highlight.min.js"></script>
+
         <link rel="stylesheet" href="style.css">
+        {include_css}
     </head>
     {header}
     <div class="content-parent" id="content-parent">
         {contents}
     </div>
+
+    <!-- Use highlighting -->
+    <script>hljs.highlightAll();</script>
 
     <!-- This is here because some divs need to load before it can execute -->
     <script src="index.js"></script>
