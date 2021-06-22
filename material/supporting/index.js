@@ -92,24 +92,21 @@ function detectDarkreader() {
 // Set initial data
 detectDarkreader();
 
-// Only display content once all images have loaded
+// Only display content once all images have loaded, apply saved preferences
 Promise.all(Array.from(document.images)
     .filter(img => !img.complete)
     .map(img => new Promise(resolve => {
         img.onload = img.onerror = resolve;
     }))
 ).then(() => {
-    document.getElementById("content-parent").classList.add("show");
-});
-
-// Detect darkreader on page mutation
-new MutationObserver(detectDarkreader).observe(document.querySelector("head"), { childList: true });
-
-// Apply saved preferances
-window.onload = () => {
     unhideLanguage(language);
 
     if (localStorage.getItem("isDarkMode") == "true") {
         toggleDark(false);
     };
-};
+
+    document.getElementById("content-parent").classList.add("show");
+});
+
+// Detect darkreader on page mutation
+new MutationObserver(detectDarkreader).observe(document.querySelector("head"), { childList: true });
