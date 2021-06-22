@@ -50,16 +50,12 @@
 
     .nav-icon {
         display: flex;
-        margin-right: 0;
+        margin-right: 10px;
     }
     
     .nav-item {
         width: {width};
         position: relative;
-    }
-
-    .hu {
-        /* font-size: 0.9rem; */
     }
 
     .content-parent {
@@ -68,6 +64,7 @@
 
     .content {
         width: 95%;
+        display: block;
     }
 
     .content h1 {
@@ -118,6 +115,8 @@
 
     .content {
         width: 90%;
+        display: flex;
+        justify-content: center;
     }
 
     .content-parent {
@@ -316,11 +315,15 @@ button + button {
 }
 
 .home-text {
-    display: inline-block;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .home-image {
-    display: inline-block;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .hu, .en {
