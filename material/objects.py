@@ -16,7 +16,9 @@ from shutil import copyfile
 from datetime import datetime
 from typing import Optional, Any
 from dataclasses import dataclass, field
-from os.path import dirname, abspath, join
+
+from os import mkdir
+from os.path import dirname, abspath, join, exists
 
 from html5print import HTMLBeautifier
 
@@ -155,6 +157,7 @@ class Header:
         """Initialize object"""
 
         self.branding = ""
+        self.subpage = ""
         self.tabs: list[str] = []
         self.icons: list[str] = []
 
@@ -163,6 +166,7 @@ class Header:
         """Get HTML of object"""
 
         return HEADER_TEMPLATE.format(
+            subpage=self.subpage,
             branding=self.branding.value,
             tabs="\n".join(line for line in self.tabs),
             icons="\n".join(line for line in self.icons),
@@ -208,6 +212,7 @@ class Document:
 
     global_header: Optional[Header] = None
     global_include_css: list[str] = []
+    global_subpage: str = ""
 
     def __init__(self, filename: str) -> None:
         """Initialize object"""
@@ -215,6 +220,8 @@ class Document:
         self.title = "WIP"
         self.filename = filename
         self.contents: list[Div] = []
+
+        self.subpage = Document.global_subpage
 
         if Document.global_header is None:
             header = Header()
@@ -242,14 +249,17 @@ class Document:
     def value(self) -> Any:
         """Return beautified HTML of object"""
 
+        self.header.subpage = self.subpage
+
         return HTMLBeautifier.beautify(
             DOCUMENT_TEMPLATE.format(
                 name=self.name,
+                subpage=self.subpage,
                 title=self.title,
                 header=("" if self.header is None else self.header.value),
                 contents="\n".join(content.value for content in self.contents),
                 include_css="\n".join(
-                    f'<link rel="stylesheet" href="{src}">'
+                    f'<link rel="stylesheet" href="/{src}">'
                     for src in Document.global_include_css
                 ),
             ),
@@ -275,6 +285,17 @@ class Document:
 
     def write(self, filename: str) -> None:
         """Write document HTML to a filename"""
+
+        if not filename.endswith("html"):
+            self.name = filename.split("/")[-2]
+
+            if not filename.endswith("/"):
+                filename += "/"
+
+            if not exists(filename):
+                mkdir(filename)
+
+            filename += "index.html"
 
         with open(filename, "w") as file:
             file.write(self.value)

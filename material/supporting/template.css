@@ -88,15 +88,6 @@
     }
 }
 
-@media screen and (orientation: portrait), screen and (min-height: 600px) {
-    .header {
-        position: fixed;
-        width: 100%;
-        top: 0;
-        z-index: 1000;
-    }
-}
-
 @media screen and (min-width: 1024px), screen and (orientation: landscape) {
     .header {
         height: 64px;
@@ -153,7 +144,15 @@
     .home-image + .home-text {
         padding-left: 30px;
     }
+}
 
+@media screen and (min-height: 600px), screen and (orientation: portrait) {
+    .header {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+    }
 }
 
 
@@ -172,15 +171,17 @@ a {
     color: var(--foreground);
 }
 
-body.nontouch button:hover, a:hover {
-    color: grey;
-    transition: all 0.3s;
-}
+@media screen and (hover: hover) {
+    button:hover, a:hover {
+        color: grey;
+        transition: all 0.3s;
+    }
 
-body.nontouch .clickable:hover {
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-    transform: scale(1.02);
-    transition: all 0.3;
+    .clickable:hover {
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+        transform: scale(1.02);
+        transition: all 0.3;
+    }
 }
 
 button + button {
@@ -364,4 +365,8 @@ button + button {
 
 .hu, .en {
     display: none;
+}
+
+.hljs {
+    background: transparent;
 }
