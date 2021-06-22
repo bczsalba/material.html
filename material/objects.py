@@ -270,7 +270,7 @@ class Document:
                     for src in Document.global_include_css
                 ),
                 include_scripts="\n".join(
-                    f'<script src="/{src}">'
+                    f'<script src="/{src}"></script>'
                     for src in Document.global_include_scripts
                 ),
             ),

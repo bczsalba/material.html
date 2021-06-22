@@ -45,9 +45,8 @@ DOCUMENT_TEMPLATE = """\
     {header}
     <div class="content-parent" id="content-parent">
         {contents}
+        {footer}
     </div>
-
-    {footer}
 
     <!-- This is here because some divs need to load before it can execute -->
     <script src="{subpage}index.js"></script>
