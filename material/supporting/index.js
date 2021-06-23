@@ -104,10 +104,16 @@ Promise.all(Array.from(document.images)
     unhideLanguage(language);
 
     if (localStorage.getItem("isDarkMode") == "true" || prefersDark) {
-        toggleDark(false);
-    };
+        if (prefersDark) {
+            toggleDark(false);
+        }
+    }
 
     document.getElementById("content-parent").classList.add("show");
+
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+        toggleDark();
+    });
 });
 
 // Detect darkreader on page mutation
