@@ -243,9 +243,7 @@ class Document:
             header = Document.global_header
 
         self.header: Header = header
-        print(filename, filename.split("/"), filename.split("/")[-1].split("."))
         self.name = filename.split("/")[-1].split(".")[0]
-        print(self.name)
 
         self.styles = {
             "accent": "orange",
