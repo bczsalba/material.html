@@ -89,6 +89,8 @@ function detectDarkreader() {
     }
 }
 
+const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+
 // Set initial data
 detectDarkreader();
 
@@ -101,7 +103,7 @@ Promise.all(Array.from(document.images)
 ).then(() => {
     unhideLanguage(language);
 
-    if (localStorage.getItem("isDarkMode") == "true") {
+    if (localStorage.getItem("isDarkMode") == "true" || prefersDark) {
         toggleDark(false);
     };
 
