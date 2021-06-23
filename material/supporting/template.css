@@ -201,10 +201,6 @@ button + button {
     filter: brightness(75%);
 }
 
-.dark-mode .content {
-    background-color: var(--layer-first);
-}
-
 .header {
     background-color: var(--layer-first);
     display: flex;
