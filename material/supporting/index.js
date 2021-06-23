@@ -1,5 +1,8 @@
 var language = localStorage.getItem("language") || "hu";
 var darkModeToggle = document.getElementById("dark-mode-toggle");
+var previousScroll = 0;
+var scrollUpBuffer = 0;
+const header = document.querySelector("header");
 
 function toggleLanguage() {
     content_parent = document.getElementById("content-parent")
@@ -123,3 +126,21 @@ Promise.all(Array.from(document.images)
 
 // Detect darkreader on page mutation
 new MutationObserver(detectDarkreader).observe(document.querySelector("head"), { childList: true });
+
+window.addEventListener("scroll", (event) => {
+    let scroll = this.scrollY;
+
+    if (scroll < previousScroll) {
+        scrollUpBuffer += previousScroll - scroll
+    } else {
+        scrollUpBuffer = 0;
+    };
+
+    if (scroll > 58 && scrollUpBuffer < 15) {
+        header.classList.add("collapsed");
+    } else if (header.classList.contains("collapsed")) {
+        header.classList.remove("collapsed");
+    }
+
+    previousScroll = scroll;
+});

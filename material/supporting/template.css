@@ -152,6 +152,35 @@
         width: 100%;
         top: 0;
         z-index: 1000;
+        transition: height 0.5s ease;
+    }
+
+    .nav-icon {
+        transition: padding 0.5s ease;
+    }
+
+    .header-branding {
+        transition: margin 0.5s ease;
+    }
+
+    .header .nav {
+        transition: top 0.5s ease;
+    }
+
+    .collapsed.header {
+        height: 66px;
+    }
+
+    .collapsed.header .header-branding {
+        margin-left: -800px;
+    }
+
+    .collapsed.header .nav {
+        top: 0;
+    }
+
+    .collapsed.header .nav-icon {
+        padding-left: 800px;
     }
 }
 
