@@ -257,6 +257,7 @@ class Document:
             "dark-header-one": "#ddd",
             "dark-header-two": "#bbb",
             "dark-paragraph": "#888",
+            "main-shadow": "0 2px 4px rgba(0, 0, 0, 0.5)",
         }
 
     @property
