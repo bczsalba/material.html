@@ -49,22 +49,6 @@ function unhideLanguage(lang) {
 }
 
 function toggleDark(transition=true) {
-    // create transition style
-    if (transition) {
-        style = document.createElement("style")
-        style.innerHTML = `
-            html, .content {
-                transition: all 0.5s;
-            }
-        `
-
-        if (document.head.contains(style)) {
-            document.head.removeChild(style);
-        }
-
-        document.head.appendChild(style);
-    }
-
     // toggle the dark-mode class for body
     document.documentElement.classList.toggle("dark-mode");
 
@@ -98,18 +82,11 @@ const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-schem
 detectDarkreader();
 
 // Only display content once all images have loaded, apply saved preferences
-Promise.all(Array.from(document.images)
-    .filter(img => !img.complete)
-    .map(img => new Promise(resolve => {
-        img.onload = img.onerror = resolve;
-    }))
-).then(() => {
+window.addEventListener("load", (e) => {
     unhideLanguage(language);
 
-    if (localStorage.getItem("isDarkMode") == "true" || prefersDark) {
-        if (prefersDark) {
-            toggleDark(false);
-        }
+    if (localStorage.getItem("isDarkMode") == "true" && prefersDark) {
+        toggleDark(false);
     }
 
     document.getElementById("content-parent").classList.add("show");
@@ -127,7 +104,7 @@ Promise.all(Array.from(document.images)
 // Detect darkreader on page mutation
 new MutationObserver(detectDarkreader).observe(document.querySelector("head"), { childList: true });
 
-window.addEventListener("scroll", (event) => {
+window.addEventListener("scroll", () => {
     let scroll = this.scrollY;
 
     if (scroll < previousScroll) {

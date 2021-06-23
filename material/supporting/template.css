@@ -316,6 +316,7 @@ button + button {
 
     text-align: center;
     background: var(--background);
+    transition: all 0.5s;
 }
 
 .show.content-parent {
