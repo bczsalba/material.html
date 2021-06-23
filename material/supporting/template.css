@@ -86,6 +86,22 @@
     .home-image {
         margin: 0px 0;
     }
+
+    .collapsed.header {
+        height: 66px;
+    }
+
+    .collapsed.header .header-branding {
+        margin-left: -800px;
+    }
+
+    .collapsed.header .nav {
+        top: 0;
+    }
+
+    .collapsed.header .nav-icon {
+        padding-left: 800px;
+    }
 }
 
 @media screen and (min-width: 1024px), screen and (orientation: landscape) {
@@ -165,22 +181,6 @@
 
     .header .nav {
         transition: top 0.5s ease;
-    }
-
-    .collapsed.header {
-        height: 66px;
-    }
-
-    .collapsed.header .header-branding {
-        margin-left: -800px;
-    }
-
-    .collapsed.header .nav {
-        top: 0;
-    }
-
-    .collapsed.header .nav-icon {
-        padding-left: 800px;
     }
 }
 
