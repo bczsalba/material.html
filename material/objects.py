@@ -165,6 +165,12 @@ class Header:
     def value(self) -> str:
         """Get HTML of object"""
 
+        if not self.subpage.startswith("/"):
+            self.subpage = "/" + self.subpage
+
+        if not self.subpage.endswith("/"):
+            self.subpage += "/"
+
         return HEADER_TEMPLATE.format(
             subpage=self.subpage,
             branding=self.branding.value,
@@ -237,7 +243,9 @@ class Document:
             header = Document.global_header
 
         self.header: Header = header
+        print(filename, filename.split("/"), filename.split("/")[-1].split("."))
         self.name = filename.split("/")[-1].split(".")[0]
+        print(self.name)
 
         self.styles = {
             "accent": "orange",
@@ -304,7 +312,7 @@ class Document:
         """Write document HTML to a filename"""
 
         if not filename.endswith("html"):
-            self.name = filename.split("/")[-2]
+            self.name = filename.rstrip("/").split("/")[-1]
 
             if not filename.endswith("/"):
                 filename += "/"
