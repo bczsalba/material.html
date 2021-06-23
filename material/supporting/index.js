@@ -111,8 +111,13 @@ Promise.all(Array.from(document.images)
 
     document.getElementById("content-parent").classList.add("show");
 
+    // Update dark mode onchange
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-        toggleDark();
+        if (e.matches && localStorage.getItem("isDarkMode") == "false" 
+            || !e.matches && localStorage.getItem("isDarkMode") == "true"
+        ) {
+            toggleDark();
+        }
     });
 });
 
