@@ -20,6 +20,7 @@ __all__ = [
 
 DOCUMENT_TEMPLATE = """\
 <!DOCTYPE html>
+<!-- Generated using Material.html -->
 <html>
     <head>
         <title>{title}</title>

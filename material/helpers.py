@@ -13,10 +13,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vestibulum, nulla 
 Ut at finibus sapien. Morbi ipsum felis, egestas in volutpat eget, tempor accumsan quam. Mauris sed dictum erat. Sed vehicula ante vel mattis congue. Nunc et neque mollis, pulvinar dui in, efficitur lectus. Proin sed elit eu enim aliquam cursus non in turpis. Curabitur sit amet tempus ante. Pellentesque id est ac tellus viverra pharetra. Aliquam eu fermentum augue. Donec in lorem id eros ultricies feugiat. Nullam tempor volutpat tortor quis convallis. Integer vel ex tempor, cursus dolor sit amet, placerat urna. Maecenas vehicula ex vel dolor venenatis interdum. In non bibendum elit\
 """
 
-def home_text(content: Union[HtmlElement, tuple[HtmlElement, ...]]) -> Div:
+def home_text(content: Union[HtmlElement, list[HtmlElement]]) -> Div:
     """Get div of class home-text with given content"""
 
-    if isinstance(content, tuple):
+    if isinstance(content, list):
         elements = []
         for element in content:
             elements.append(element)
@@ -26,10 +26,10 @@ def home_text(content: Union[HtmlElement, tuple[HtmlElement, ...]]) -> Div:
     return Div(cls="home-text", elements=[content])
 
 
-def home_image(content: Img) -> Div:
+def home_image(content: Union[Img, list[Img]]) -> Div:
     """Get div of class home-image with given content"""
 
-    return Div(cls="home-image", elements=[content])
+    return Div(cls="home-image", elements=content)
 
 
 def lorem_ipsum() -> Div:

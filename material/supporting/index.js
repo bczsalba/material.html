@@ -1,3 +1,5 @@
+/* Generated using Material.html */
+
 var language = localStorage.getItem("language") || "hu";
 var darkModeToggle = document.getElementById("dark-mode-toggle");
 var previousScroll = 0;
