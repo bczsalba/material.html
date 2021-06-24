@@ -17,11 +17,7 @@ def home_text(content: Union[HtmlElement, list[HtmlElement]]) -> Div:
     """Get div of class home-text with given content"""
 
     if isinstance(content, list):
-        elements = []
-        for element in content:
-            elements.append(element)
-
-        return Div(cls="home-text", elements=elements)
+        return Div(cls="home-text", elements=content)
 
     return Div(cls="home-text", elements=[content])
 
@@ -29,7 +25,16 @@ def home_text(content: Union[HtmlElement, list[HtmlElement]]) -> Div:
 def home_image(content: Union[Img, list[Img]]) -> Div:
     """Get div of class home-image with given content"""
 
-    return Div(cls="home-image", elements=content)
+    if isinstance(content, list):
+        return Div(cls="home-image", elements=content)
+
+    return Div(cls="home-image", elements=[content])
+
+
+def clickable_image(href: str, **img_args):
+    """Create an Img wrapped in an a tag"""
+
+    return tag("a", inner=Img(**img_args).value).set_property("href", href)
 
 
 def lorem_ipsum() -> Div:
