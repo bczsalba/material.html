@@ -96,7 +96,7 @@
     }
 
     .collapsed.header .nav {
-        top: 0;
+        top: 2px;
     }
 
     .collapsed.header .nav-icon {
