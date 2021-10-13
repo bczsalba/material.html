@@ -30,15 +30,9 @@ from .templates import (
 )
 
 
-__all__ = [
-    "HtmlElement",
-    "tag",
-    "ul",
-    "Div",
-    "Img",
-    "Header",
-    "Document",
-]
+__all__ = ["DOCUMENTS", "HtmlElement", "tag", "ul", "Div", "Img", "Header", "Document"]
+
+DOCUMENTS: list[Document] = []
 
 
 @dataclass
@@ -198,11 +192,13 @@ class Header:
 
         if href is None:
             href = f"{name}.html"
-            
+
         if inner is None:
             inner = f"<span>{name}</span>"
 
-        self.tabs.append(TAB_TEMPLATE.format(subpage=self.subpage, href=href, inner=inner, name=name))
+        self.tabs.append(
+            TAB_TEMPLATE.format(subpage=self.subpage, href=href, inner=inner, name=name)
+        )
 
     def add_tab_icon(
         self, icon: str, ID: str = "", onclick: str = "", subclass: str = ""
@@ -259,6 +255,8 @@ class Document:
             "dark-paragraph": "#888",
             "main-shadow": "0 2px 4px rgba(0, 0, 0, 0.5)",
         }
+
+        DOCUMENTS.append(self)
 
     @property
     def value(self) -> Any:
