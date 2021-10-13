@@ -5,6 +5,8 @@ material.objects.
 author: bczsalba
 """
 
+from __future__ import annotations
+
 from typing import Union
 from .objects import Div, Img, HtmlElement, tag
 
@@ -13,7 +15,8 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vestibulum, nulla 
 Ut at finibus sapien. Morbi ipsum felis, egestas in volutpat eget, tempor accumsan quam. Mauris sed dictum erat. Sed vehicula ante vel mattis congue. Nunc et neque mollis, pulvinar dui in, efficitur lectus. Proin sed elit eu enim aliquam cursus non in turpis. Curabitur sit amet tempus ante. Pellentesque id est ac tellus viverra pharetra. Aliquam eu fermentum augue. Donec in lorem id eros ultricies feugiat. Nullam tempor volutpat tortor quis convallis. Integer vel ex tempor, cursus dolor sit amet, placerat urna. Maecenas vehicula ex vel dolor venenatis interdum. In non bibendum elit\
 """
 
-def home_text(content: Union[HtmlElement, list[HtmlElement]]) -> Div:
+
+def home_text(content: HtmlElement | list[HtmlElement]) -> Div:
     """Get div of class home-text with given content"""
 
     if isinstance(content, list):
@@ -22,7 +25,7 @@ def home_text(content: Union[HtmlElement, list[HtmlElement]]) -> Div:
     return Div(cls="home-text", elements=[content])
 
 
-def home_image(content: Union[Img, list[Img]]) -> Div:
+def home_image(content: Img | list[Img]) -> Div:
     """Get div of class home-image with given content"""
 
     if isinstance(content, list):
@@ -40,6 +43,4 @@ def clickable_image(href: str, **img_args):
 def lorem_ipsum() -> Div:
     """Return placeholder lorem ipsum text div"""
 
-    return home_text(
-        tag("p", inner=LOREM_TEXT)
-    )
+    return home_text(tag("p", inner=LOREM_TEXT))
