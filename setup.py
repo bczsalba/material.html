@@ -13,4 +13,9 @@ setup(
     url="https://github.com/bczsalba/material.html",
     author="BcZsalba",
     author_email="bczsalba@gmail.com",
+    entry_points={
+        "console_scripts": [
+            "mathml = material.cli:main",
+        ]
+    },
 )

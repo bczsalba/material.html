@@ -9,8 +9,6 @@ Note: The CSS template is stored at supporting/template.css.
 """
 
 __all__ = [
-    "DIV_TEMPLATE",
-    "IMG_TEMPLATE",
     "DOCUMENT_TEMPLATE",
     "HEADER_TEMPLATE",
     "TAB_TEMPLATE",

@@ -1,5 +1,5 @@
 """
-material.objects.
+material.helpers
 -----------------
 
 author: bczsalba
