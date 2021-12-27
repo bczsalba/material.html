@@ -1,6 +1,6 @@
 /* Generated using Material.html */
 
-var language = localStorage.getItem("language") || "hu";
+var language = localStorage.getItem("language") || "en";
 var darkModeToggle = document.getElementById("dark-mode-toggle");
 var previousScroll = 0;
 var scrollUpBuffer = 0;

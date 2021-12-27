@@ -30,7 +30,17 @@ from .templates import (
 )
 
 
-__all__ = ["DOCUMENTS", "HtmlElement", "tag", "ul", "Div", "Img", "Header", "Document"]
+__all__ = [
+    "DOCUMENTS",
+    "HtmlElement",
+    "tag",
+    "ul",
+    "Div",
+    "Anchor",
+    "Img",
+    "Header",
+    "Document",
+]
 
 DOCUMENTS: list[Document] = []
 
@@ -50,6 +60,26 @@ class HtmlElement:
 
         self._inner = ""
         self.property_fields = getattr(self, "__dataclass_fields__").copy()
+
+    @classmethod
+    def from_data(cls, data: dict[str, Any]) -> HtmlElement:
+        """Create HtmlElement from supplied JSON"""
+
+        obj = cls(data["name"])
+        for item in data:
+            for inner in data.items():
+                for key, value in data.items():
+                    if key == "inner":
+                        inner = []
+                        for tagname, data in value.items():
+                            data["name"] = tagname
+                            inner.append(cls.from_data(data))
+
+                        value = inner
+
+                    setattr(obj, key, value)
+
+        return obj
 
     @property
     def tag_data(self) -> str:
@@ -91,6 +121,19 @@ class HtmlElement:
         setattr(self, key, value)
         self.property_fields[key] = value
 
+        return self
+
+    def set_style(self, **data: dict[str, str]) -> HtmlElement:
+        """Define inline styles"""
+
+        if self.property_fields.get("style") is None:
+            self.property_fields["style"] = ""
+
+        for key, value in data.items():
+            key = key.replace("_", "-")
+            self.property_fields["style"] += f"{key}: {value};"
+
+        setattr(self, "style", self.property_fields["style"])
         return self
 
     def start_tag(self) -> str:
@@ -136,12 +179,21 @@ class Div(HtmlElement):
 
 
 @dataclass
+class Anchor(Div):
+    """Represents an html a tag"""
+
+    name = "a"
+    href: str = ""
+
+
+@dataclass
 class Img(HtmlElement):
     """Representative of the HTML img tag"""
 
     name = "img"
     src: str = ""
     alt: str = ""
+    href: str = ""
 
 
 class Header:
@@ -150,7 +202,7 @@ class Header:
     def __init__(self) -> None:
         """Initialize object"""
 
-        self.branding = ""
+        self.branding = HtmlElement("")
         self.subpage = Document.global_subpage
         self.tabs: list[str] = []
         self.icons: list[str] = []
@@ -224,6 +276,25 @@ class Document:
     global_footer: str = ""
     global_subpage: str = ""
 
+    styles = {
+        "accent": "orange",
+        "foreground": "var(--accent)",
+        "background": "#e9edef",
+        "card": "#ffffff",
+        "card-border": "#dbe0e6",
+        "header-one": "#000000",
+        "header-two": "#666666",
+        "paragraph": "#888888",
+        "layer-first": "#212121",
+        "dark-background": "#1d1d1d",
+        "dark-header-one": "#ddd",
+        "dark-header-two": "#bbb",
+        "dark-paragraph": "grey",
+        "dark-card": "var(--layer-first)",
+        "dark-card-border": "#1d1d1d",
+        "main-shadow": "0 2px 4px rgba(0, 0, 0, 0.5)",
+    }
+
     def __init__(self, filename: str) -> None:
         """Initialize object"""
 
@@ -241,26 +312,16 @@ class Document:
         self.header: Header = header
         self.name = filename.split("/")[-1].split(".")[0]
 
-        self.styles = {
-            "accent": "orange",
-            "foreground": "var(--accent)",
-            "background": "#ffffff",
-            "header-one": "#000000",
-            "header-two": "#666666",
-            "paragraph": "#888888",
-            "layer-first": "#212121",
-            "dark-background": "#1d1d1d",
-            "dark-header-one": "#ddd",
-            "dark-header-two": "#bbb",
-            "dark-paragraph": "#888",
-            "main-shadow": "0 2px 4px rgba(0, 0, 0, 0.5)",
-        }
-
         DOCUMENTS.append(self)
+
+        self._raw_value: str | None = None
 
     @property
     def value(self) -> Any:
         """Return beautified HTML of object"""
+
+        if self._raw_value is not None:
+            return self._raw_value
 
         subpage = self.subpage
         if len(subpage):
@@ -288,6 +349,12 @@ class Document:
             indent=4,
         )
 
+    @value.setter
+    def value(self, new: str) -> None:
+        """Set raw value"""
+
+        self._raw_value = new
+
     def __enter__(self) -> Document:
         """Enter context"""
 
@@ -299,11 +366,15 @@ class Document:
         self.write(self.filename)
         print("Generated", self.name, "at", self.filename)
 
-    def add_content(self) -> Div:
+    def add_content(self, **properties) -> Div:
         """Add a new Div with class="content", return it"""
 
-        self.contents.append(Div(cls="content"))
-        return self.contents[-1]
+        content = Div(cls="content")
+        for key, value in properties.items():
+            content.set_property(key, value)
+
+        self.contents.append(content)
+        return content
 
     def write(self, filename: str) -> None:
         """Write document HTML to a filename"""
