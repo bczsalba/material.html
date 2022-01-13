@@ -188,11 +188,14 @@ def create_page(name: str, title: str, content: dict[str, Any]) -> None:
     return page
 
 
-def create_documents(data: dict[str, Any]) -> None:
+def create_documents(data: dict[str, Any], root: str | None = None) -> None:
     """Create documents from loaded data"""
 
     header = Header()
     Document.global_header = header
+
+    if root is not None:
+        data["config"]["root"] = root
 
     if data.get("config") is not None:
         load_config(data["config"], header=header)
@@ -225,6 +228,7 @@ def parse_arguments(args: list[str]) -> Namespace:
 
     parser = ArgumentParser()
     parser.add_argument("file", help="YAML file to use as generator base")
+    parser.add_argument("-o", "--output", help="output directory. overrides `root`")
 
     if len(args) == 0:
         parser.print_help()
@@ -243,7 +247,7 @@ def main() -> None:
     with open(args.file, "r", encoding="utf-8") as file:
         content = yaml.safe_load(file)
 
-    create_documents(content)
+    create_documents(content, root=args.output)
 
 
 if __name__ == "__main__":
