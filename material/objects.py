@@ -274,7 +274,7 @@ class Document:
     global_include_css: list[str] = []
     global_include_scripts: list[str] = []
     global_footer: str = ""
-    global_subpage: str = ""
+    global_subpage: str = "/"
 
     styles = {
         "accent": "orange",
@@ -324,7 +324,7 @@ class Document:
             return self._raw_value
 
         subpage = self.subpage
-        if len(subpage):
+        if len(subpage) > 1:
             subpage = "/" + subpage + "/"
 
         self.header.subpage = subpage
