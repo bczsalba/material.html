@@ -309,7 +309,6 @@ button + button {
     left: 0;
     right: 0;
 
-    text-align: center;
     padding-top: 20px;
     /* background: var(--background);*/
 }
@@ -371,7 +370,7 @@ button + button {
     /*padding-top: 5px;*/
 }
 
-.content-img, 
+.content-img,
 .content img {
     border: 1px solid var(--foreground);
     border-radius: 5px;
