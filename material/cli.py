@@ -131,7 +131,9 @@ def create_page(name: str, title: str, content: dict[str, Any]) -> None:
     """Create page with title & content"""
 
     with Document(name) as page:
-        page.write_supporting_to(".")
+        if name == "index.html":
+            page.write_supporting_to(".")
+
         page.title = title
 
         for i, (key, value) in enumerate(content.items()):
