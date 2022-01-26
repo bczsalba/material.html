@@ -1,10 +1,12 @@
 from setuptools import setup, find_packages
+import glob
 
 setup(
     name="material.html",
     version="0.0.0",
     packages=["material"],
-    package_data={"material": ["template.css", "index.js"]},
+    include_package_data=True,
+    package_data={"": ["supporting/*"]},
     license="MIT",
     description="Generate MaterialUI websites using Python.",
     long_description=open("README.md").read(),
