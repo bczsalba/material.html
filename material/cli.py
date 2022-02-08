@@ -177,7 +177,7 @@ def create_page(name: str, title: str, content: dict[str, Any]) -> None:
             ]
 
             if len(images) == 0:
-                div.elements.extend(texts)
+                actions[0]()
                 continue
 
             if len(texts) == 0:
